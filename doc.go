@@ -245,23 +245,23 @@ func (s *Doc) Followable() bool {
 
 // Описание пути в ссылке или ресурсе
 type Path struct {
-	External        bool
-	Relative        bool // first "/" not exists
-	DotPrefix       int8 // number of dots in prefix, 
+	External  bool
+	Relative  bool // first "/" not exists
+	DotPrefix int8 // number of dots in prefix,
 }
 
 // Структура для описания документа
 type Link struct {
-	Pre      string
-	Anchor   string
-	Post     string
-	Scheme   string // http, https, tel, javascript, mailto, call, any...
-	Image    []Attr // Index of image + details
-	Nofollow bool
+	Pre              string
+	Anchor           string
+	Post             string
+	Scheme           string // http, https, tel, javascript, mailto, call, any...
+	Image            []Attr // Index of image + details
+	Nofollow         bool
 	NofollowExternal bool
-	Rel      string
-	path     string
-	frag string
+	Rel              string
+	path             string
+	frag             string
 }
 
 // Проверка наличия аттрибута rel=nofollow
@@ -288,3 +288,48 @@ type Attr struct {
 }
 
 // --------------------------------------------------------------------------
+
+// <a><a><a> ?
+const (
+	IN_DOC iota
+	IN_BLOCK
+	IN_A
+)
+
+
+// 4 scorpion example
+func ParseHtml(r io.Reader) {
+	t := html.NewTokenizer(r)
+	t.AllowCDATA(true)
+
+	for {
+		// t.NextIsNotRawText() // To find later, else text goes with tags: <title>s<b>s</b>ss</title>
+		tt := t.Next()
+		if tt == html.ErrorToken {
+			return
+		}
+		u, _ := t.TagName()
+		s := t.Text()
+		for {
+			v, x, e := t.TagAttr()
+
+			tag := string(u)
+			attr := string(v)
+			value := string(x)
+			text := string(s)
+
+			if tag == "script" && attr == "src" {
+				if strings.HasPrefix(value, "//") || strings.HasPrefix(value, "http://") || strings.HasPrefix(value, "https://") {
+					fmt.Printf("%v %v = %v|\n", tag, attr, value)
+				}
+			}
+			if strings.TrimSpace(text) != "" {
+				fmt.Printf("=== %v=%v|\n", tag, strings.TrimSpace(text))
+			}
+
+			if e == false || tag == "" {
+				break
+			}
+		}
+	}
+}
