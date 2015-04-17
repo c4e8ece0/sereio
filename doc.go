@@ -7,6 +7,7 @@ import (
 	"golang.org/x/net/html"
 )
 
+// TODO: Полный рерайт? <- Нужна проверка пробелов между атрибутом и значением
 // TODO: Define canonical behavior in diff SE
 // TODO: Не забывать про множественные варианты тегов и содержаний для мета-тегов
 // TODO: Не забывать про "nofollow external" и "dofollow-wtf?", "next" и "prev"
@@ -14,6 +15,7 @@ import (
 // TODO: В Path.Scheme нужен свой разборщик на каждый протокол
 // No space between attributes. mortgage_submit"><button type="button"class="
 // <select></select> ? <- Нужна проверка на отсутствие необходимых элементов
+// Doc.HasMicroFormats == [class=vcard],[meta^=og:...],[<attr>==schema.org]
 
 // FROM PHP:
 // public function HttpEquiv(){}
@@ -45,6 +47,8 @@ type Doc struct {
 	paragraphs []Paragraph // is br-br == p in Behavior?
 	sentences  []Sentence
 	metahe_robots
+
+	HasMicroFormats bool // Maybe has microformats flag
 
 	links []Link
 	words []Word
@@ -295,7 +299,6 @@ const (
 	IN_BLOCK
 	IN_A
 )
-
 
 // 4 scorpion example
 func ParseHtml(r io.Reader) {
