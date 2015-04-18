@@ -16,6 +16,7 @@ import (
 // No space between attributes. mortgage_submit"><button type="button"class="
 // <select></select> ? <- Нужна проверка на отсутствие необходимых элементов
 // Doc.HasMicroFormats == [class=vcard],[meta^=og:...],[<attr>==schema.org]
+// Рендер документа и полей стиля где и когда?
 
 // FROM PHP:
 // public function HttpEquiv(){}
@@ -52,6 +53,41 @@ type Doc struct {
 
 	links []Link
 	words []Word
+}
+
+// Создание представления из документа:
+// - Мешок слов
+// - Мешок слов с нормализацией по AOT|Yandex.HL|Google.HL|Yandex.Colloc||...
+// - Блоки + слова []->[]
+// - Блоки + пассажи []->[]->[]
+// - Блоки|пассажи + слова
+// - Полные классы стилей
+// - block vs inline?
+// - Приведение классов стилей к однословным
+// - ... Теги, меты, бу бу бу, все поля и аттрибуты
+func (s *Doc) View(func(Tr) Stat) {
+	// ...
+}
+
+type Factor struct {
+	name  string
+	value float32
+	ok    bool // ?
+}
+
+func (f *Factor) Set(string) error {
+	//... проверять имя?
+}
+
+type Stat struct {
+	name string
+	rows int
+	cols int
+	arr  []int
+}
+
+func (s *Stat) Show() map[Factor]float32 {
+	// Набор данных для эксорта в Qolumn
 }
 
 // Выдернуть все ссылки из документа
