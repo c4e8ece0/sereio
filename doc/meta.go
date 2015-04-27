@@ -1,5 +1,6 @@
-// Package meta fetch metatags from html io.Reader
-package meta
+package doc
+
+// fetch metatags from html io.Reader
 
 // public function HE_vs_Meta(){} // поиск мет, которые должны быть "http-equiv", а не "name" и наоборот
 

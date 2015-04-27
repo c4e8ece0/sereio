@@ -2,7 +2,7 @@
 
 // FULL DESCRIPTION AND USAGE: \\red\_localhost\www\__lib2\srf\pecl_stats.c
 
-package stat
+package calc
 
 type Array struct {
 	data []float32

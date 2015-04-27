@@ -1,5 +1,6 @@
-// Package meta make check and fetch microformats from HTML
-package mf
+package doc
+
+// make check and fetch microformats from HTML
 
 func (s *Doc) extract_vcard() {
 }

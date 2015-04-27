@@ -1,6 +1,6 @@
-// Package links extract links from document without mercy
+package doc
 
-package links
+// extract links from document without mercy
 
 const (
 	FOLLOW = 1 << iota

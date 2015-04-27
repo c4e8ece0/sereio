@@ -1,5 +1,6 @@
-// Package checker checks document structure and shows tags intersection
-package checker
+package doc
+
+// check document structure and shows tags intersection
 
 // Проверка корректности структуры документа
 // => <!doctype><html><head><title></title></head><body></body></html>
@@ -13,7 +14,6 @@ const (
 	TITLE
 	BODY
 )
-
 
 func (s *Doc) CheckStuct() {
 
