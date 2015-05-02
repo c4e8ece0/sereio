@@ -35,6 +35,24 @@ func New(r io.Reader, f sere.Targeter) *Doc {
 // --------------------------------------------------------------------------
 // --------------------------------------------------------------------------
 
+// Const maybe better? How much total needed?
+// Options setting? Func? Flags? Field assign?
+type Param struct { // i.e. what to fetch?
+	ScriptSrc     bool
+	ScriptContent bool
+	AHref         bool
+	AFull         bool // new Link[] as result
+	CssClass      bool
+	CssStyle      bool
+	ImgAlt        bool
+	AttrTitle     bool
+	IframeSrc     bool
+	ImgSrc        bool
+	LinkSrc       bool
+	Title         bool
+	Text          bool
+}
+
 // Структура для описания документа
 type Doc struct {
 	blocks     []Block
