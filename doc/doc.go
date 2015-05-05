@@ -27,7 +27,7 @@ import (
 // public function Report(){} // Отчёт об ошибках и добавлениях в код
 
 // Создание нового объекта
-func New(r io.Reader, f sere.Targeter) *Doc {
+func New(r io.Reader) *Doc {
 	return &Doc{}
 }
 
@@ -37,23 +37,28 @@ func New(r io.Reader, f sere.Targeter) *Doc {
 
 // Const maybe better? How much total needed?
 // Options setting? Func? Flags? Field assign?
-type Param struct { // i.e. what to fetch?
-	ScriptSrc     bool
-	ScriptContent bool
-	AHref         bool
-	AFull         bool // new Link[] as result
-	CssClass      bool
-	CssStyle      bool
-	ImgAlt        bool
-	AttrTitle     bool
-	IframeSrc     bool
-	ImgSrc        bool
-	LinkSrc       bool
-	Title         bool
-	Text          bool
+type ParamDel struct { // i.e. what to fetch?
 }
 
 // Структура для описания документа
+func usage() {
+	// Var 1
+	todo = doc.New(html.body())
+	todo.Ahref = true
+	todo.ImgSrc = true
+	todo.ScriptSrc = true
+	todo.LinksSrc = true
+	todo.IframeSrc = true
+	t := todo.Parse() // return Qolumn = [*.View("name", data)]?
+
+	// Var 2
+	todo = doc.New(html.body())
+	todo.Resources() // OR
+	todo.Images()    // OR
+	todo.Links()
+	s := todo.Parse() // return Qolumn = [*.View("name", data)]?
+}
+
 type Doc struct {
 	blocks     []Block
 	paragraphs []Paragraph // is br-br == p in Behavior?
@@ -64,6 +69,28 @@ type Doc struct {
 
 	links []Link
 	words []Word
+
+	Param struct {
+		ScriptSrc     bool
+		ScriptContent bool
+		AHref         bool
+		AFull         bool // new Link[] as result
+		CssClass      bool
+		CssStyle      bool
+		ImgAlt        bool
+		AttrTitle     bool
+		IframeSrc     bool
+		ImgSrc        bool
+		LinkSrc       bool
+		Title         bool
+		Text          bool
+	}
+}
+
+// Упаковка документа для хранения
+// Свой формат для каждого поля описания
+// text = id(words[10e3+] global_ids, delims[>10e3] ids, signs[>10e3] ids)
+func (d *Doc) Pack() io.Reader {
 }
 
 // Создание представления из документа:
