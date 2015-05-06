@@ -60,16 +60,20 @@ func usage() {
 }
 
 type Doc struct {
-	blocks     []Block
-	paragraphs []Paragraph // is br-br == p in Behavior?
-	sentences  []Sentence
-	metahe_robots
+	// blocks     []Block
+	// paragraphs []Paragraph // is br-br == p in Behavior?
+	// sentences  []Sentence
+	// metahe_robots
+	// links []Link
+	// words []Word
 
-	HasMicroFormats bool // Maybe has microformats flag
+	// Report bools
+	Has struct {
+		HTML         bool
+		MicroFormats bool // Maybe has microformats flag
+	}
 
-	links []Link
-	words []Word
-
+	// Parser params
 	Param struct {
 		ScriptSrc     bool
 		ScriptContent bool
