@@ -113,11 +113,33 @@ func (d *Doc) Pack() io.Reader {
 // - Переводы
 // - Аббревиатуры
 // - Синонимы
-// - Расширения по типа речи?
+// - Расширения по типам речи?
 // - Джойны
 // - Коллокации
-func (s *Doc) View(func(Tr) Stat) {
+func (s *Doc) View(func(Tr) Qol) {
 	// ...
+}
+
+// View($)
+const (
+	STRING iota
+	LOWER
+	SYNSET
+	EXPAND_YANDEX
+	COLLOC_YANDEX
+	HL_YANDEX
+)
+
+func (s *Qol) {
+	// => [passage_id][]int32{<word_ids>}
+	// passages | strict | summary
+	doc.From(PASSAGES).View(STRICT).With(StatSummary)
+}
+
+type Qol struct {
+	data interface{}
+	size int
+	name string
 }
 
 // Выдернуть все ссылки из документа
