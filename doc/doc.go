@@ -138,12 +138,12 @@ func (s *Qol) Task() {
 
 	// Or
 	doc.
-		From(PASSAGES).
+		From(PassageClosure(SplitterByTagCollectionClosure(TAG_TD, TAG_DIV))). // i.e. <p><table>, <td><div>, CONTEXT FOR TD? Se.Profile{}?
 		With(SYNSET).
 		Make(TokenCount). // map[string]int
 		Filter(Frequency(3)).
-		Norm(log).
 		Name("passages.synset.count.log") // auto || from predefined views
+		Norm(log).
 
 	// Qolumn.SetNext(doc.
 
