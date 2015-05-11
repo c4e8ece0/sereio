@@ -138,7 +138,12 @@ func (s *Qol) Task() {
 
 	// Or
 	doc.
-		From(PassageClosure(SplitterByTagCollectionClosure(TAG_TD, TAG_DIV))). // i.e. <p><table>, <td><div>, CONTEXT FOR TD? Se.Profile{}?
+		Use.(se.YandexProfile). // se.Profile must contains specific parser delimiters and rules (context td)
+		From(
+			// Group of splitters with se.Profile usage (do closure realy need?)
+			SplitByTagCollectionClosure(TAG_TD, TAG_DIV), // array of 1-len array blocks, i.e. <p><table>, <td><div>
+			PassagesClosure(), // array of tokens array of bags (delimiter fields) [OR]
+			BagOfWordClosure()). // array of words (bag of words)
 		With(SYNSET).
 		Make(TokenCount). // map[string]int
 		Filter(Frequency(3)).
