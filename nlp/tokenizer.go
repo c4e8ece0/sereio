@@ -1,3 +1,10 @@
+// Package tok get array of arrays matrix and rebuild it to another form
+package tok
+
+func New(m qolumn.Matr) qolumn.Matr{
+
+}
+
 
 /*
 
