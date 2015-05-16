@@ -214,3 +214,101 @@ const (
 	IN_BLOCK
 	IN_A
 )
+
+func ParseHtml(r io.Reader) {
+	t := html.NewTokenizer(r)
+	t.AllowCDATA(true)
+
+	for {
+		// t.NextIsNotRawText() // To find later, else text goes with tags: <title>s<b>s</b>ss</title>
+		tt := t.Next()
+		if tt == html.ErrorToken {
+			return
+		}
+		u, _ := t.TagName()
+		s := t.Text()
+		for {
+			v, x, e := t.TagAttr()
+
+			tag := string(u)
+			attr := string(v)
+			value := string(x)
+			text := string(s)
+
+			if tag == "script" && attr == "src" {
+				if strings.HasPrefix(value, "//") || strings.HasPrefix(value, "http://") || strings.HasPrefix(value, "https://") {
+					fmt.Printf("%v %v = %v|\n", tag, attr, value)
+				}
+			}
+			if strings.TrimSpace(text) != "" {
+				fmt.Printf("=== %v=%v|\n", tag, strings.TrimSpace(text))
+			}
+
+			if e == false || tag == "" {
+				break
+			}
+		}
+	}
+}
+
+//
+func LoadFiles(dirpages string) map[int]string {
+	doc := make(map[int]string)
+
+	// Список урлов и содержание в них слов из подсветки
+	arr, _ := ioutil.ReadDir(dirpages)
+	for _, v := range arr {
+		if strings.Contains(v.Name(), ".url") {
+			continue
+		}
+		f, err := os.Open(dirpages + v.Name())
+		check(err)
+		defer f.Close()
+
+		s, err := NewCyrReader(f)
+		check(err)
+
+		d, err := ioutil.ReadAll(s)
+		check(err)
+
+		if len(d) < 1 {
+			continue
+		}
+
+		c, err := strconv.Atoi(v.Name())
+		check(err)
+
+		doc[c] = string(d)
+		if len(doc) >= DOCLIMIT {
+			break
+		}
+	}
+	return doc
+}
+
+//
+func NewCyrReader(r io.ReadSeeker) (io.Reader, error) {
+	enc := DetermineCyrEncoding(r)
+	return charset.NewReaderByName(enc, r)
+}
+
+//
+func DetermineCyrEncoding(r io.ReadSeeker) string {
+	r.Seek(0, 0)
+	str, _ := ioutil.ReadAll(r)
+	r.Seek(0, 0)
+	s, _, _ := cyrutf.DetermineEncoding(str)
+	a := string(s)
+	if len(s) == 0 {
+		_, p, e := charset.DetermineEncoding(str, "text/html") // works only on utf-8
+		s = p
+		fmt.Printf("2=%v %v\n", s, e)
+	}
+	if a == "windows-1252" {
+		a = "windows-1251"
+	}
+	if a == "" {
+		a = "utf-8" // in the name of universe
+	}
+	return a
+}
