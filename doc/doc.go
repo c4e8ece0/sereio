@@ -215,6 +215,19 @@ const (
 	IN_A
 )
 
+// KISS THAT CRAP
+func ParseLinks() { // []Attr
+
+}
+
+func ParseMeta() { // [name][]content
+
+}
+
+func ParseText() { // [block_id][passage_id][]word_id
+
+}
+
 func ParseHtml(r io.Reader) {
 	t := html.NewTokenizer(r)
 	t.AllowCDATA(true)
