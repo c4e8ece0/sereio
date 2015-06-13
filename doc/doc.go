@@ -1,5 +1,5 @@
-//
-package sere
+// Package doc collect data about all fragments
+package doc
 
 import (
 	"io"
@@ -28,7 +28,7 @@ import (
 
 // Создание нового объекта
 func New(r io.Reader) *Doc {
-	return &Doc{src:}
+	return &Doc{src: ""}
 }
 
 // --------------------------------------------------------------------------
@@ -92,100 +92,6 @@ type Doc struct {
 		Text          bool
 	}
 }
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-
-type Fragment struct {
-	content string
-}
-
-// Predefined parameters for fragment.Attr()
-var (
-	SelectAttrAllTitle = map[string]map[string]struct{}{"*": {"title": struct{}{}}}
-	SelectAttrAllClass = map[string]map[string]struct{}{"*": {"class": struct{}{}}}
-	SelectAttrATitle   = map[string]map[string]struct{}{"a": {"title": struct{}{}}}
-	SelectAttrAHref    = map[string]map[string]struct{}{"a": {"href": struct{}{}}}
-	SelectAttrImgAlt   = map[string]map[string]struct{}{"img": {"alt": struct{}{}}}
-	SelectAttrImgSrc   = map[string]map[string]struct{}{"img": {"src": struct{}{}}}
-	SelectAttrScriptSrc    = map[string]map[string]struct{}{"script": {"src": struct{}{}}}
-)
-var (
-	NoTags    = false
-	NeedTags  = true
-	NoAttrs   = false
-	NeedAttrs = true
-)
-
-// Method Attr() fetch attr values for specified tags ("*" for all) and their attrs
-func (f *Fragment) Attr(tagAttr map[string]map[string]struct{}, saveTag, saveAttr bool) (vals, tags, attrs []string) {
-	z := html.NewTokenizer(strings.NewReader(f.content))
-	for {
-		z.NextIsNotRawText()
-		tt := z.Next()
-		switch tt {
-		case html.ErrorToken:
-			return
-		case html.StartTagToken:
-			t, hasAttr := z.TagName()
-			if !hasAttr {
-				continue
-			}
-			realtag := string(t)
-			searchtag := realtag
-			if _, exists := tagAttr[searchtag]; !exists {
-				if _, exists := tagAttr["*"]; !exists {
-					continue
-				} else {
-					searchtag = "*"
-				}
-			}
-			for {
-				v, x, hasMore := z.TagAttr()
-				attr := string(v)
-				value := string(x)
-				if _, exists := tagAttr[searchtag][attr]; exists {
-					vals = append(vals, value)
-					if saveTag {
-						tags = append(tags, realtag)
-					}
-					if saveAttr {
-						attrs = append(attrs, attr)
-					}
-				}
-				if !hasMore {
-					break
-				}
-			}
-		}
-	}
-	return
-}
-
-// Подсчёт частоты токенов по значениям атрибутов
-func (f *Fragment) AttrStat(rule map[string]map[string]struct{}) map[string]int {
-	stat := make(map[string]int)
-	return f.Attr(rule, NoTags, NoAttrs)
-}
-
-// Подсчёт стилей
-func (f *Fragment) CountTitles() map[string]int {
-	return d.AttrStat(SelectAttrAllTitle)
-}
-
-// Подсчёт стилей
-func (f *Fragment) CountAlts() map[string]int {
-	return d.AttrStat(SelectAttrImgAlt)
-}
-
-// Подсчёт классов
-func (f *Fragment) CountClass() map[string]int {
-	return d.AttrStat(SelectAttrAllClass)
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
 
 // Упаковка документа для хранения
 // Свой формат для каждого поля описания
