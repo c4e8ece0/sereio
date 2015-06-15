@@ -20,6 +20,10 @@ type Attr struct {
 // Predefined rules for attr.Fetch()
 // Tag-rules delimited by "_" for two parts: Tag1Tag2_Attr1Attr2. Tag can be "*" for all.
 var (
+	Any_Recource = map[string]map[string]struct{}{
+		"*":      {"src": struct{}{}, "href": struct{}{}},
+		"script": {"src": struct{}{}},
+	}
 	Any_Title   = map[string]map[string]struct{}{"*": {"title": struct{}{}}}
 	Any_Class   = map[string]map[string]struct{}{"*": {"class": struct{}{}}}
 	A_Title     = map[string]map[string]struct{}{"a": {"title": struct{}{}}}
@@ -38,7 +42,7 @@ var (
 	NeedAttrs = true
 )
 
-// Method Fetch() extract attr values for specified tags ("*" for all) and their attrs
+// Extract attr values for specified tags ("*" for all) and their attrs
 func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr bool) (vals, tags, attrs []string) {
 	z := html.NewTokenizer(a.src)
 	for {
@@ -54,13 +58,6 @@ func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr bool
 				continue
 			}
 			realtag := string(t)
-			if realtag == "script" {
-				if skip_script(z) {
-					continue
-				} else {
-					break
-				}
-			}
 			if false {
 				fmt.Printf("\n\t%v", z.Token())
 			}
@@ -70,6 +67,16 @@ func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr bool
 					continue
 				} else {
 					searchtag = "*"
+				}
+			}
+
+			if realtag == "script" {
+				if _, exists := rule["script"]; !exists {
+					if skip_script(z) {
+						continue
+					} else {
+						break
+					}
 				}
 			}
 
@@ -95,7 +102,7 @@ func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr bool
 	return
 }
 
-// Function skip_script get current *html.Tokenizer and skip content of <script>
+// Get current *html.Tokenizer and skip content of <script>
 // Returns recomendation to continue work with that struct.
 func skip_script(z *html.Tokenizer) bool {
 	for {
@@ -132,6 +139,10 @@ func (a *Attr) CountInputTitle() map[string]int {
 
 func (a *Attr) CountATitle() map[string]int {
 	return a.Count(A_Title)
+}
+
+func (a *Attr) CountAnyResource() map[string]int {
+	return a.Count(Any_Recource)
 }
 
 func (a *Attr) CountAnyClass() map[string]int {
