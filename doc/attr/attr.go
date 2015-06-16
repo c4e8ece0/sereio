@@ -9,6 +9,7 @@ import (
 )
 
 // TODO: Self-typed returns, i.e. "vals Vals" instead of "vals []string" + export interfaces
+// TODO: ++ collect all attrs, like tags
 
 // Create new object
 func New(r io.Reader) *Attr {

@@ -20,6 +20,7 @@ import (
 // HOWTO: append to Qolumn? A nahua?
 //
 // Sere.Register() + Module + mods - это же View ?!!!!
+// USE SOMEWHERE: https://github.com/fatih/pool
 
 // FROM PHP:
 // public function HttpEquiv(){}
@@ -142,6 +143,50 @@ func (s *Doc) extractstructure() {
 
 // Статистика по тегам, классам, словам
 func (s *Doc) makestats() {
+}
+
+// Just good practice
+func withLockContext(fn func()) {
+	mu.Lock
+	defer mu.Unlock()
+
+	fn()
+}
+func foo() {
+	withLockContext(func() {
+		// foo related stuff
+	})
+}
+
+// same + db
+func withDBContext(fn func(db DB)) error {
+	// get a db connection from the connection pool
+	dbConn := NewDB()
+
+	return fn(dbConn)
+}
+func boo() {
+	withDBContext(func(db *DB) error {
+		// foo related stuff
+	})
+}
+
+// Safe multiple storages
+type Storage interface {
+	Delete(key string)
+	Get(key string) string
+	Put(key, value string)
+}
+
+func Delete(key string) {
+	mu.Lock()
+	delete(m, key)
+	mu.Unlock()
+}
+func Put(key, value string) {
+	mu.Lock()
+	m[key] = value
+	mu.Unlock()
 }
 
 // // Module description
