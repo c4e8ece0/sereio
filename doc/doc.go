@@ -124,7 +124,7 @@ func (s *Doc) View(func(Tr) Qol) {
 
 // View($)
 const (
-	STRICT iota
+	STRICT = iota + 1
 	LOWER
 	SYNSET
 	EXPAND_YANDEX
@@ -164,7 +164,7 @@ func (s *Doc) makestats() {
 
 //
 const (
-	BLOCK = 1 << iota
+	BLOCK = 1 << (iota + 1)
 	PARAGRAPH
 	PASSAGE
 	SENTENCE
@@ -212,7 +212,7 @@ type Attr struct {
 
 // <a><a><a> ?
 const (
-	IN_DOC iota
+	IN_DOC = iota + 1
 	IN_BLOCK
 	IN_A
 )

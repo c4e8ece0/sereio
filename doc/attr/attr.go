@@ -8,31 +8,17 @@ import (
 	"golang.org/x/net/html"
 )
 
-// Создание нового объекта
+// TODO: Self-typed returns, i.e. "vals Vals" instead of "vals []string" + export interfaces
+
+// Create new object
 func New(r io.Reader) *Attr {
 	return &Attr{src: r}
 }
 
+//
 type Attr struct {
 	src io.Reader
 }
-
-// Predefined rules for attr.Fetch()
-// Tag-rules delimited by "_" for two parts: Tag1Tag2_Attr1Attr2. Tag can be "*" for all.
-var (
-	Any_Recource = map[string]map[string]struct{}{
-		"*":      {"src": struct{}{}, "href": struct{}{}},
-		"script": {"src": struct{}{}},
-	}
-	Any_Title   = map[string]map[string]struct{}{"*": {"title": struct{}{}}}
-	Any_Class   = map[string]map[string]struct{}{"*": {"class": struct{}{}}}
-	A_Title     = map[string]map[string]struct{}{"a": {"title": struct{}{}}}
-	Input_Title = map[string]map[string]struct{}{"input": {"title": struct{}{}}}
-	A_Href      = map[string]map[string]struct{}{"a": {"href": struct{}{}}}
-	Img_Alt     = map[string]map[string]struct{}{"img": {"alt": struct{}{}}}
-	Img_Src     = map[string]map[string]struct{}{"img": {"src": struct{}{}}}
-	Script_Src  = map[string]map[string]struct{}{"script": {"src": struct{}{}}}
-)
 
 // Helpers for parameters saveTag and saveAttr of Fetch()
 var (
@@ -40,6 +26,28 @@ var (
 	NeedTags  = true
 	NoAttrs   = false
 	NeedAttrs = true
+)
+
+// For better readability
+var (
+	void = struct{}{}
+)
+
+// Predefined rules for attr.Fetch()
+// Tag-rules delimited by "_" for two parts: Tag1Tag2_Attr1Attr2. Tag can be "*" for all.
+var (
+	Any_Resource = map[string]map[string]struct{}{
+		"*":      {"src": void, "href": void},
+		"script": {"src": void},
+	}
+	Any_Title   = map[string]map[string]struct{}{"*": {"title": void}}
+	Any_Class   = map[string]map[string]struct{}{"*": {"class": void}}
+	A_Title     = map[string]map[string]struct{}{"a": {"title": void}}
+	Input_Title = map[string]map[string]struct{}{"input": {"title": void}}
+	A_Href      = map[string]map[string]struct{}{"a": {"href": void}}
+	Img_Alt     = map[string]map[string]struct{}{"img": {"alt": void}}
+	Img_Src     = map[string]map[string]struct{}{"img": {"src": void}}
+	Script_Src  = map[string]map[string]struct{}{"script": {"src": void}}
 )
 
 // Extract attr values for specified tags ("*" for all) and their attrs
@@ -142,7 +150,7 @@ func (a *Attr) CountATitle() map[string]int {
 }
 
 func (a *Attr) CountAnyResource() map[string]int {
-	return a.Count(Any_Recource)
+	return a.Count(Any_Resource)
 }
 
 func (a *Attr) CountAnyClass() map[string]int {

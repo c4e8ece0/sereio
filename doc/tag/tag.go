@@ -24,7 +24,7 @@ type List struct {
 }
 
 // Build array of tags in document
-func (t *Tag) Build() {
+func (t *List) Build() {
 	if len(t.list) > 0 {
 		return
 	}
@@ -36,7 +36,7 @@ func (t *Tag) Build() {
 		switch tt {
 		case html.ErrorToken:
 			return
-		case html.StartTagToken, html.SelfClosingTagToken, html.EndTagToken:
+		case html.StartTagToken, html.SelfClosingTagToken, html.EndTagToken, html.DoctypeToken:
 			p, _ := z.TagName()
 			realtag := string(t)
 			t.list = append(t.list, []Tag{Name: realtag, Type: tt})
@@ -47,6 +47,11 @@ func (t *Tag) Build() {
 		}
 	}
 	return
+}
+
+// Todo
+func (t *List) String() {
+	return fmt.Sprintf("%v", t)
 }
 
 // Get current *html.Tokenizer and skip content of <script>
