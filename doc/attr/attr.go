@@ -41,6 +41,7 @@ var (
 		"*":      {"src": void, "href": void},
 		"script": {"src": void},
 	}
+	Any_Any     = map[string]map[string]struct{}{"*": {"*": void}}
 	Any_Title   = map[string]map[string]struct{}{"*": {"title": void}}
 	Any_Class   = map[string]map[string]struct{}{"*": {"class": void}}
 	A_Title     = map[string]map[string]struct{}{"a": {"title": void}}
@@ -93,7 +94,9 @@ func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr bool
 				v, x, hasMore := z.TagAttr()
 				attr := string(v)
 				value := string(x)
-				if _, exists := rule[searchtag][attr]; exists {
+				_, exists := rule[searchtag][attr]
+				_, all := rule[searchtag]["*"]
+				if exists || all {
 					vals = append(vals, value)
 					if saveTag {
 						tags = append(tags, realtag)
