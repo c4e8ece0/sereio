@@ -123,6 +123,21 @@ func (s *Doc) View(func(Tr) Qol) {
 	// ...
 }
 
+// Produces classic bag of words
+func (s *Doc) BagOfWords() {
+	// ...
+}
+
+// Produces vector view (i.e. with coordinates)
+func (s *Doc) ListOfWords() {
+	// ...
+}
+
+// Produces list of block-vectors (i.e. array of coordinates in document fragments block + paragraph + sentence + word)
+func (s *Doc) ViewListOfBags() {
+	// ...
+}
+
 // View($)
 const (
 	STRICT = iota + 1

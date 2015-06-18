@@ -31,25 +31,25 @@ var (
 
 // For better readability
 var (
-	void = struct{}{}
+	set = struct{}{}
 )
 
 // Predefined rules for attr.Fetch()
 // Tag-rules delimited by "_" for two parts: Tag1Tag2_Attr1Attr2. Tag can be "*" for all.
 var (
 	Any_Resource = map[string]map[string]struct{}{
-		"*":      {"src": void, "href": void},
-		"script": {"src": void},
+		"*":      {"src": set, "href": set},
+		"script": {"src": set},
 	}
-	Any_Any     = map[string]map[string]struct{}{"*": {"*": void}}
-	Any_Title   = map[string]map[string]struct{}{"*": {"title": void}}
-	Any_Class   = map[string]map[string]struct{}{"*": {"class": void}}
-	A_Title     = map[string]map[string]struct{}{"a": {"title": void}}
-	Input_Title = map[string]map[string]struct{}{"input": {"title": void}}
-	A_Href      = map[string]map[string]struct{}{"a": {"href": void}}
-	Img_Alt     = map[string]map[string]struct{}{"img": {"alt": void}}
-	Img_Src     = map[string]map[string]struct{}{"img": {"src": void}}
-	Script_Src  = map[string]map[string]struct{}{"script": {"src": void}}
+	Any_Any     = map[string]map[string]struct{}{"*": {"*": set}}
+	Any_Title   = map[string]map[string]struct{}{"*": {"title": set}}
+	Any_Class   = map[string]map[string]struct{}{"*": {"class": set}}
+	A_Title     = map[string]map[string]struct{}{"a": {"title": set}}
+	Input_Title = map[string]map[string]struct{}{"input": {"title": set}}
+	A_Href      = map[string]map[string]struct{}{"a": {"href": set}}
+	Img_Alt     = map[string]map[string]struct{}{"img": {"alt": set}}
+	Img_Src     = map[string]map[string]struct{}{"img": {"src": set}}
+	Script_Src  = map[string]map[string]struct{}{"script": {"src": set}}
 )
 
 // Extract attr values for specified tags ("*" for all) and their attrs
