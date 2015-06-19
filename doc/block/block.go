@@ -20,7 +20,7 @@ var (
 		"body":       set,
 		"div":        set,
 		"table":      set,
-		"table > td": set,
+		"table > td": set, // special case
 		"ul":         set,
 		"ol":         set,
 		"li":         set,
@@ -30,9 +30,16 @@ var (
 //
 var (
 	ParagraphDelimeterDefault = map[string]struct{}{
-		"p":  set,
-		"hr": set,
-		"":   set,
+		"p":          set,
+		"hr":         set,
+		"h1":         set,
+		"h2":         set,
+		"h3":         set,
+		"h4":         set,
+		"h5":         set,
+		"h6":         set,
+		"p > b":      set, // special case
+		"p > strong": set, // special case
 	}
 )
 
