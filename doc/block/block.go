@@ -1,5 +1,5 @@
 // Package block split document to fragments by set of tags
-package split
+package block
 
 import (
 	"io/ioutil"
@@ -9,7 +9,7 @@ import (
 )
 
 //
-func New(src io.Reader, delim Delimeter) {
+func New(src io.Reader) {
 	return &List{content: ioutil.ReadAll(r), make(attr.Attr, 0)}
 }
 

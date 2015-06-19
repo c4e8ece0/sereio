@@ -27,6 +27,8 @@ var (
 	NeedTags  = true
 	NoAttrs   = false
 	NeedAttrs = true
+	NoIndex   = false
+	NeedIndex = true
 )
 
 // For better readability
@@ -53,24 +55,21 @@ var (
 )
 
 // Extract attr values for specified tags ("*" for all) and their attrs
-func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr bool) (vals, tags, attrs []string) {
+func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr, saveIndex bool) (vals, tags, attrs []string, tagIndex []uint32) {
 	z := html.NewTokenizer(a.src)
+	var i uint32 = 0
 	for {
 		//z.NextIsNotRawText()
 		tt := z.Next()
+		i++
 		switch tt {
 		case html.ErrorToken:
 			return
 
 		case html.StartTagToken, html.SelfClosingTagToken:
 			t, hasAttr := z.TagName()
-			if !hasAttr {
-				continue
-			}
+
 			realtag := string(t)
-			if false {
-				fmt.Printf("\n\t%v", z.Token())
-			}
 			searchtag := realtag
 			if _, exists := rule[searchtag]; !exists {
 				if _, exists := rule["*"]; !exists {
@@ -90,6 +89,10 @@ func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr bool
 				}
 			}
 
+			if !hasAttr {
+				continue
+			}
+
 			for {
 				v, x, hasMore := z.TagAttr()
 				attr := string(v)
@@ -103,6 +106,9 @@ func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr bool
 					}
 					if saveAttr {
 						attrs = append(attrs, attr)
+					}
+					if saveTagIndex {
+						tagIndex = append(tagIndex, i)
 					}
 				}
 				if !hasMore {

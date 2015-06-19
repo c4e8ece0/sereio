@@ -1,44 +1,44 @@
 // Package delim contains definitions for splitting data to the blocks
 package delim
 
-var set = struct{}{}
+// "set" replaces with bool to be possible reassign type of split
 
 // Default vars with appending of se.Profile
 var (
-	Block = map[string]struct{}{
-		"html":       set,
-		"head":       set,
-		"body":       set,
-		"div":        set,
-		"table":      set,
-		"table > td": set,
-		"ul":         set,
-		"ol":         set,
-		"li":         set,
+	Block = map[string]bool{
+		"html":       true,
+		"head":       true,
+		"body":       true,
+		"div":        true,
+		"table":      true,
+		"table > td": true,
+		"ul":         true,
+		"ol":         true,
+		"li":         true,
 	}
 
-	Paragraph = map[string]struct{}{
-		"p":          set,
-		"hr":         set,
-		"h1":         set,
-		"h2":         set,
-		"h3":         set,
-		"h4":         set,
-		"h5":         set,
-		"h6":         set,
-		"p > b":      set, // TODO: special case for hX search in sere/meta
-		"p > strong": set, // special case
+	Paragraph = map[string]bool{
+		"p":          true,
+		"hr":         true,
+		"h1":         true,
+		"h2":         true,
+		"h3":         true,
+		"h4":         true,
+		"h5":         true,
+		"h6":         true,
+		"p > b":      true, // TODO: special case for hX search in sere/meta
+		"p > strong": true, // special case
 	}
 
-	Sentence = map[string]struct{}{
-		". [A-Z]{3,}": set,
-		"p":           set, // special case
+	Sentence = map[string]bool{
+		". [A-Z]{3,}": true,
+		"p":           true, // special case
 	}
 
-	Word = map[string]struct{}{
-		" ": set,
-		"-": set,
-		",": set,
-		".": set,
+	Word = map[string]bool{
+		" ": true,
+		"-": true,
+		",": true,
+		".": true,
 	}
 )
