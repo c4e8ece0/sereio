@@ -1,46 +1,11 @@
 // Package block split document to fragments by set of tags
-package block
+package split
 
 import (
 	"io/ioutil"
 
 	"github.com/c4e8ece0/sereio/doc/attr"
-)
-
-// For better readability
-var (
-	set = struct{}{}
-)
-
-//
-var (
-	BlockDelimeterDefault = map[string]struct{}{
-		"html":       set,
-		"head":       set,
-		"body":       set,
-		"div":        set,
-		"table":      set,
-		"table > td": set, // special case
-		"ul":         set,
-		"ol":         set,
-		"li":         set,
-	}
-)
-
-//
-var (
-	ParagraphDelimeterDefault = map[string]struct{}{
-		"p":          set,
-		"hr":         set,
-		"h1":         set,
-		"h2":         set,
-		"h3":         set,
-		"h4":         set,
-		"h5":         set,
-		"h6":         set,
-		"p > b":      set, // special case
-		"p > strong": set, // special case
-	}
+	"github.com/c4e8ece0/sereio/doc/block/delim"
 )
 
 //

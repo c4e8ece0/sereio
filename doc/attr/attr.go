@@ -1,4 +1,4 @@
-// Package attr extract data from attributes of html-tags
+// Package attr extract data from attributes of tags and make some statistics
 package attr
 
 import (

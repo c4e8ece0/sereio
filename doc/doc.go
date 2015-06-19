@@ -27,6 +27,8 @@ import (
 // public function Crop(){} // обрезка документа по какому-то признаку (<body>, <html>)
 // public function Report(){} // Отчёт об ошибках и добавлениях в код
 
+var Set = struct{}{}
+
 // Создание нового объекта
 func New(r io.Reader) *Doc {
 	return &Doc{src: ""}
