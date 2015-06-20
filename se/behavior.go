@@ -51,9 +51,24 @@ type Profile struct {
 	TagSpace []tag.Tag
 }
 
+var Default = Profile{
+	Name:                 "Sere.io",
+	RobotsUserAgent:      "sereio user-agent",
+	RobotsAllowExtension: true,
+	RobotsCleanParam:     true,
+	RobotsCleanParamWide: true,
+	RobotsHost:           true,
+	RobotsAllow:          true,
+	RobotsSitemap:        true,
+	RobotsWildcart:       true,
+	RobotsVoidIgnore:     true,
+	RobotsLenAllow:       true,
+	RobotsEmptyBefore:    true,
+	RobotsSitemap:        true,
+}
 var Yandex = Profile{
 	Name:                 "Yandex",
-	RobotsUserAgent:      "yandex",
+	RobotsUserAgent:      "yandex user-agent",
 	RobotsAllowExtension: true,
 	RobotsCleanParam:     true,
 	RobotsCleanParamWide: true,
@@ -69,7 +84,7 @@ var Yandex = Profile{
 
 var Google = Profile{
 	Name:                 "Google",
-	RobotsUserAgent:      "googlebot",
+	RobotsUserAgent:      "googlebot user-agent",
 	RobotsAllowExtension: true,
 	RobotsCleanParam:     true,
 	RobotsCleanParamWide: true,
@@ -85,7 +100,7 @@ var Google = Profile{
 
 var Yahoo = Profile{
 	Name:                 "Yahoo",
-	RobotsUserAgent:      "yahoo",
+	RobotsUserAgent:      "yahoo user-agent",
 	RobotsAllowExtension: true,
 	RobotsCleanParam:     true,
 	RobotsCleanParamWide: true,

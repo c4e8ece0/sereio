@@ -1,4 +1,8 @@
-package sere
+package sereio
+
+import (
+	"strings"
+)
 
 type TokenID uint32
 type WordID uint32
@@ -19,9 +23,9 @@ type Getter interface {
 	Get(id int) error
 }
 
-type Counter interface {
-	Tokens []TokenID
-	Freq map[TokenID]Count
+type Counter struct {
+	Tokens []*TokenID
+	Freq   map[TokenID]Count
 }
 
 type Token struct {
@@ -30,7 +34,6 @@ type Token struct {
 
 func (t *Token) Pack() {
 }
-
 
 type Word struct {
 	src string
@@ -43,7 +46,7 @@ func (w *Word) Strict() string {
 
 // Приведение к нижнему регистру
 func (w *Word) Lower() string {
-	return strings.Lower(w.src)
+	return strings.ToLower(w.src)
 }
 
 // Получение базовой формы слова
@@ -53,12 +56,12 @@ func (w *Word) Base() string {
 
 // Расширение слова на группу синонимов
 func (w *Word) Expand() []Word {
-	hl string // -geo
+	var hl string = "" // -geo
 }
 
 // Предствление предложения
 type Sentence struct {
-	bag []Word
+	bag  []Word
 	inst interface{}
 }
 

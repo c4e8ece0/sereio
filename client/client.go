@@ -2,7 +2,7 @@
 package client
 
 import (
-	"http"
+	"net/http"
 )
 
 // based on std.client
@@ -25,4 +25,8 @@ type ClientProfile struct {
 }
 
 type Param struct {
+}
+
+func Get(s string) (interface{}, interface{}) {
+	return http.Get(s)
 }

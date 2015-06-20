@@ -1,10 +1,11 @@
 // Package delim contains definitions for splitting data to the blocks
 package delim
 
-// "set" replaces with bool to be possible reassign type of split
+// "set" replaces with bool to be able reassign type of split
 
 // Default vars with appending of se.Profile
 var (
+	// Move to se.Profile later
 	Block = map[string]bool{
 		"html":       true,
 		"head":       true,
@@ -30,15 +31,5 @@ var (
 		"p > strong": true, // special case
 	}
 
-	Sentence = map[string]bool{
-		". [A-Z]{3,}": true,
-		"p":           true, // special case
-	}
-
-	Word = map[string]bool{
-		" ": true,
-		"-": true,
-		",": true,
-		".": true,
-	}
+	// Sentence and Word moved to the sere/doc/text
 )

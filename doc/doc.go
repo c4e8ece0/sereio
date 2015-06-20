@@ -56,8 +56,8 @@ func usage() {
 
 	// Var 2
 	todo = doc.New(html.body())
-	todo.Resources() // OR
-	todo.Images()    // OR
+	todo.Resources() // .attr
+	todo.Images()    // .attr + PrepareImages(implode attrs by tag index)
 	todo.Links()
 	s := todo.Parse() // return Qolumn = [*.View("name", data)]?
 }
@@ -80,19 +80,20 @@ type Doc struct {
 
 	// Parser params
 	Param struct {
-		ScriptSrc     bool
-		ScriptContent bool
-		AHref         bool
-		AFull         bool // new Link[] as result
-		CssClass      bool
-		CssStyle      bool
-		ImgAlt        bool
-		AttrTitle     bool
-		IframeSrc     bool
-		ImgSrc        bool
-		LinkSrc       bool
-		Title         bool
-		Text          bool
+		// Move it to helper-methods of doc.
+		// ScriptSrc     bool
+		// ScriptContent bool
+		// AHref         bool
+		// AFull         bool // new Link[] as result
+		// CssClass      bool
+		// CssStyle      bool
+		// ImgAlt        bool
+		// AttrTitle     bool
+		// IframeSrc     bool
+		// ImgSrc        bool
+		// LinkSrc       bool
+		// Title         bool
+		// Text          bool
 	}
 }
 
@@ -139,16 +140,6 @@ func (s *Doc) ListOfWords() {
 func (s *Doc) ViewListOfBags() {
 	// ...
 }
-
-// View($)
-const (
-	STRICT = iota + 1
-	LOWER
-	SYNSET
-	EXPAND_YANDEX
-	COLLOC_YANDEX
-	HL_YANDEX
-)
 
 // Выдернуть все ссылки из документа
 func (s *Doc) extractlinks() {
@@ -234,10 +225,15 @@ const (
 	ALL = BLOCK | PARAGRAPH | PASSAGE | SENTENCE
 )
 
+// Getting sereio/attr objectject
+func (s *Doc) Attr() *Attr {
+
+}
+
 // --------------------------------------------------------------------------
 // Выбрать только заголовки
 func (s *Doc) Headers() []string {
-
+	// TODO doc.Tag().Headers()
 }
 
 // --------------------------------------------------------------------------

@@ -4,23 +4,27 @@ package tag
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 
 	"golang.org/x/net/html"
 )
 
 // Создание нового объекта
-func New(r io.Reader) *TagList {
-	return &List{src: r}
+func New(r io.Reader) (*List, error) {
+	s, e := ioutil.ReadAll(r)
+	return &List{content: s, list: make([]Tag, 0)}, e
 }
 
+//
 type Tag struct {
 	Name string
 	Type html.TokenType
 }
 
+//
 type List struct {
-	src  io.Reader
-	list []Tag
+	content string
+	list    []Tag
 }
 
 // Build array of tags in document
@@ -40,18 +44,12 @@ func (t *List) Build() {
 			p, _ := z.TagName()
 			realtag := string(t)
 			t.list = append(t.list, []Tag{Name: realtag, Type: tt})
-
 			if realtag == "script" && skip_script(z) {
 				t.list = append(t.list, []Tag{Name: realtag, Type: html.EndTagToken})
 			}
 		}
 	}
 	return
-}
-
-// Todo
-func (t *List) String() {
-	return fmt.Sprintf("%v", t)
 }
 
 // Get current *html.Tokenizer and skip content of <script>

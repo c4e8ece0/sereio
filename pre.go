@@ -1,4 +1,4 @@
-package plan
+package sereio
 
 // package url
 
@@ -7,6 +7,10 @@ package plan
 // package doc
 //
 // Отчёт по ошибкам (контекст по ПС)
+
+import (
+	"github.com/c4e8ece0/sereio/client"
+)
 
 type TagRule struct {
 	Name string
@@ -25,23 +29,22 @@ type ParsePlan struct {
 	Rules map[string]ParseRule
 }
 
-type Token struct {
+type Token2 struct {
 }
 
-func (t *Token) Parse() {
+func (t *Token2) Parse() {
 }
 
 type NLP struct {
-	bytes     []byte
-	runes     []rune
-	words     []word
-	sentences []sentence
-	passages  []passage
-	paragraph  []passage
-	blocks    []paragraph
-	texts     []text
+	// bytes     []byte
+	// runes     []rune
+	// words     []word
+	// sentences []sentence
+	// passages  []passage
+	// paragraph []passage
+	// blocks    []paragraph
+	// texts     []text
 }
-
 
 func TagSplit() {
 
@@ -52,21 +55,21 @@ func PassageSplit() {
 }
 
 type Client struct {
-	NewStorage(Storage)
-	NewFetcher(Fetcher)
-	NewProxy(Proxy)
-	TestWwwWide()
-	Param().Conc(N) // Live Time, Keep Alive
-	Delay() //
-	Cookie(Storage)
-	WebDriver(Storage)
-	Timeout() // seacrch, resolve, connect, receive, keep-alive
-	TimeLimit() // <- time.Limit(10*time.Sec)
-	RequestNumLimit();
+	// NewStorage(Storage)
+	// NewFetcher(Fetcher)
+	// NewProxy(Proxy)
+	// TestWwwWide()
+	// Param().Conc(N) // Live Time, Keep Alive
+	// Delay() //
+	// Cookie(Storage)
+	// WebDriver(Storage)
+	// Timeout() // seacrch, resolve, connect, receive, keep-alive
+	// TimeLimit() // <- time.Limit(10*time.Sec)
+	// RequestNumLimit();
 }
 
 func ClientSyncAsync() {
-	s := new Sere
-	s.Chain() 
-	b := sere.ProcessControl(); // stop, replace, restore, restart
+	s := client.NewClient()
+	s.Chain()
+	b := sere.ProcessControl() // stop, replace, restore, restart
 }

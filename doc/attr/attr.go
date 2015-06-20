@@ -2,14 +2,15 @@
 package attr
 
 import (
-	"fmt"
 	"io"
 
+	"github.com/c4e8ece0/sereio"
 	"golang.org/x/net/html"
 )
 
 // TODO: Self-typed returns, i.e. "vals Vals" instead of "vals []string" + export interfaces
 // TODO: ++ collect all attrs, like tags
+// TODO: Move count* to the sere/calc
 
 // Create new object
 func New(r io.Reader) *Attr {
@@ -19,6 +20,7 @@ func New(r io.Reader) *Attr {
 //
 type Attr struct {
 	src io.Reader
+	sereio.DataFrame
 }
 
 // Helpers for parameters saveTag and saveAttr of Fetch()
@@ -55,7 +57,7 @@ var (
 )
 
 // Extract attr values for specified tags ("*" for all) and their attrs
-func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr, saveIndex bool) (vals, tags, attrs []string, tagIndex []uint32) {
+func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr, saveTagIndex bool) (vals, tags, attrs []string, tagIndex []uint32) {
 	z := html.NewTokenizer(a.src)
 	var i uint32 = 0
 	for {
@@ -140,7 +142,7 @@ func skip_script(z *html.Tokenizer) bool {
 // Count frequency of tokens in attributes
 func (a *Attr) Count(rule map[string]map[string]struct{}) (stat map[string]int) {
 	stat = make(map[string]int)
-	kw, _, _ := a.Fetch(rule, NoTags, NoAttrs)
+	kw, _, _, _ := a.Fetch(rule, NoTags, NoAttrs, NoIndex)
 	for _, t := range kw {
 		stat[t]++
 	}
