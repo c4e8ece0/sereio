@@ -61,7 +61,7 @@ func (a *Attr) Fetch(rule map[string]map[string]struct{}, saveTag, saveAttr, sav
 	z := html.NewTokenizer(a.src)
 	var i uint32 = 0
 	for {
-		//z.NextIsNotRawText()
+		z.NextIsNotRawText()
 		tt := z.Next()
 		i++
 		switch tt {

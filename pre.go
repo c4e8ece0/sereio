@@ -9,7 +9,7 @@ package sereio
 // Отчёт по ошибкам (контекст по ПС)
 
 import (
-	"github.com/c4e8ece0/sereio/client"
+	_ "github.com/c4e8ece0/sereio/client"
 )
 
 type TagRule struct {
@@ -51,7 +51,7 @@ func TagSplit() {
 }
 
 func PassageSplit() {
-	html.Scanner().Tokens(tok.ByTags)
+	// html.Scanner().Tokens(tok.ByTags)
 }
 
 type Client struct {
@@ -69,7 +69,7 @@ type Client struct {
 }
 
 func ClientSyncAsync() {
-	s := client.NewClient()
-	s.Chain()
-	b := sere.ProcessControl() // stop, replace, restore, restart
+	// s := client.NewClient()
+	// s.Chain()
+	// b := sere.ProcessControl() // stop, replace, restore, restart
 }

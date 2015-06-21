@@ -45,6 +45,8 @@ type Link struct {
 	Rel              string
 	path             string
 	frag             string
+	spacePref        bool
+	spacePost        bool
 }
 
 // Проверка наличия аттрибута rel=nofollow

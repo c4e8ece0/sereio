@@ -1,6 +1,7 @@
 package sereio
 
 import (
+	"github.com/c4e8ece0/sereio/lingo"
 	"strings"
 )
 
@@ -51,20 +52,20 @@ func (w *Word) Lower() string {
 
 // Получение базовой формы слова
 func (w *Word) Base() string {
-	return nlp.BaseForm(w.src)
+	return lingo.BaseForm(w.src)
 }
 
-// Расширение слова на группу синонимов
-func (w *Word) Expand() []Word {
-	var hl string = "" // -geo
-}
+// // Расширение слова на группу синонимов
+// func (w *Word) Expand() []Word {
+// 	var hl string = "" // -geo
+// }
 
-// Предствление предложения
-type Sentence struct {
-	bag  []Word
-	inst interface{}
-}
+// // Предствление предложения
+// type Sentence struct {
+// 	bag  []Word
+// 	inst interface{}
+// }
 
-// "ya", "translit", "?gg?"
-func (s *Sentence) Translate() []string {
-}
+// // "ya", "translit", "?gg?"
+// func (s *Sentence) Translate() []string {
+// }

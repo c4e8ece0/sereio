@@ -34,6 +34,26 @@ func New(r io.Reader) *Doc {
 	return &Doc{src: ""}
 }
 
+// CYRUTF ADDITION
+func utf1_main() {
+	data1 := "ABC"
+	fmt.Println(utf8.ValidString(data1)) //prints: true
+
+	data2 := "A\xfeC"
+	fmt.Println(utf8.ValidString(data2)) //prints: false
+}
+
+// DON'T FORGET NFC
+func utf2_main() {
+	data := "é"
+	fmt.Println(len(data))                    //prints: 3
+	fmt.Println(utf8.RuneCountInString(data)) //prints: 2
+}
+
+// --------------------------------------------------------------------------
+// HTML.TOKENIZER Looses spaces of attrs (and text?) -- REQUIRE SOMETHING (html.Node?)
+// --------------------------------------------------------------------------
+
 // --------------------------------------------------------------------------
 // --------------------------------------------------------------------------
 // --------------------------------------------------------------------------
