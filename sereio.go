@@ -20,3 +20,14 @@ func NewGet(url string) {
 func NewRead(path string) {
 
 }
+
+type Error struct {
+	pkg string // package with param
+	err string // error.New() predefined in package
+}
+
+// Collect package error and make []string
+func ErrorList(err []*Error) {
+	// Collect errors
+	// Make log
+}

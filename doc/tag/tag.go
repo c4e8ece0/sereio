@@ -25,6 +25,7 @@ type Tag struct {
 type List struct {
 	content string
 	list    []Tag
+	err     []*sereio.Error
 }
 
 // Build array of tags in document
@@ -67,4 +68,16 @@ func skip_script(z *html.Tokenizer) bool {
 			}
 		}
 	}
+}
+
+// Check and collect errors
+func (l *List) Check() (haserror bool) {
+	// append to l.err
+	//
+}
+
+//
+func (l *List) ErrorList() []string {
+	// pref = tag(??)
+	return sereio.ErrorList("tag(?param?)", l.err)
 }
