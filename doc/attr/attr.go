@@ -44,6 +44,7 @@ var (
 	Any_Resource = map[string]map[string]struct{}{
 		"*":      {"src": set, "href": set},
 		"script": {"src": set},
+		"meta":   {"content": set}, //<meta property="og:image" content="http://www.moneymatika.ru/project/res/img/logo.png" />
 	}
 	Any_Any     = map[string]map[string]struct{}{"*": {"*": set}}
 	Any_Title   = map[string]map[string]struct{}{"*": {"title": set}}

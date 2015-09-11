@@ -1,5 +1,7 @@
 // Package qolumn make the data collecting and preparation
 
+// NOTICE: BECOME SEREWWW/data
+
 package qolumn
 
 func (s *Qol) Task() {
